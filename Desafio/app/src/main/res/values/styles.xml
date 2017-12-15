@@ -8,4 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Estilo para as TextViews da  agenda-->
+    <style name="textAgenda" >
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Estilo para os ImageButtons da  agenda-->
+    <style name="imgBtnAgenda" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintBottom_toTopOf">parent</item>
+        <item name="layout_constraintTop_toBottomOf">parent</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
 </resources>
