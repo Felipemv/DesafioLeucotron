@@ -4,7 +4,7 @@ package com.desafio.felipe.desafio.Model;
  * Created by felipe on 15/12/17.
  */
 
-public class LigacaoBloqueada {
+public class NumIndesejado {
 
     private String nome;
     private String telefone;

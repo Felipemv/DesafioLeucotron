@@ -24,4 +24,10 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
+    <style name="textAdd" >
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
 </resources>

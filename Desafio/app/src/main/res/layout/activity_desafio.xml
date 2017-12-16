@@ -12,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lista Negra"
-        android:textSize="49sp"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="10sp"/>
 
     <ListView
         android:id="@+id/listView"
@@ -22,6 +23,16 @@
         app:layout_constraintTop_toBottomOf="@+id/cabecalhoAgenda">
 
     </ListView>
+
+    <ImageButton
+        android:id="@+id/carregar"
+        android:src="@drawable/atualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/listView"
+        app:layout_constraintEnd_toStartOf="@id/adicionar"
+        android:layout_marginRight="10dp"/>
 
     <ImageButton
         android:src="@drawable/adicionar"

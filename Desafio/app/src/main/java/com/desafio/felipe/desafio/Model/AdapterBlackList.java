@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class AdapterBlackList extends BaseAdapter{
 
     private Context context;
-    private ArrayList<LigacaoBloqueada> list;
+    private ArrayList<NumIndesejado> list;
     private LayoutInflater inflater;
 
-    public AdapterBlackList(Context context, ArrayList<LigacaoBloqueada> list) {
+    public AdapterBlackList(Context context, ArrayList<NumIndesejado> list) {
         this.context = context;
         this.list = list;
 
@@ -35,7 +35,7 @@ public class AdapterBlackList extends BaseAdapter{
     }
 
     @Override
-    public LigacaoBloqueada getItem(int position) {
+    public NumIndesejado getItem(int position) {
         return list.get(position);
     }
 
@@ -57,7 +57,7 @@ public class AdapterBlackList extends BaseAdapter{
         ImageButton editar = (ImageButton) convertView.findViewById(R.id.editar);
         ImageButton remover = (ImageButton) convertView.findViewById(R.id.remover);
 
-        LigacaoBloqueada ligacao = getItem(position);
+        NumIndesejado ligacao = getItem(position);
 
         nome.setText(ligacao.getNome());
         tele.setText(ligacao.getTelefone());
