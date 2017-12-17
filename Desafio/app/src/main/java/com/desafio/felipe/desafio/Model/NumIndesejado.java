@@ -6,8 +6,17 @@ package com.desafio.felipe.desafio.Model;
 
 public class NumIndesejado {
 
+    private long id;
     private String nome;
     private String telefone;
+
+    public long getId(){
+        return id;
+    }
+
+    public void setId(long id){
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

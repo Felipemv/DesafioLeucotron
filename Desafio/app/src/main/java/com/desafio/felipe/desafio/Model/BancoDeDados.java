@@ -3,6 +3,7 @@ package com.desafio.felipe.desafio.Model;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
@@ -10,70 +11,31 @@ import java.util.ArrayList;
  * Created by felipe on 15/12/17.
  */
 
-public class BancoDeDados {
+public class BancoDeDados extends SQLiteOpenHelper{
 
-    private static final String NOME_TABELA = "lista_negra";
-    private Context context;
+    public static final String NOME_TABELA = "lista_negra";
+    private static final String NOME_BANCO = "banco_desafio";
+    private static final int VERSAO = 1;
 
-    private SQLiteDatabase database;
+    private static final String CRIAR_TABELA = "CREATE TABLE IF NOT EXISTS "
+            +NOME_TABELA+ " (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, " +
+            "telefone VARCHAR)";
 
-    public BancoDeDados(Context context){
-        this.context = context;
+    private static final String DELETAR_TABELA = "DELETE TABLE IF EXISTS "+ NOME_TABELA;
+
+    public BancoDeDados(Context context) {
+        super(context, NOME_BANCO, null, VERSAO);
     }
 
-    public boolean conexao(){
-        try{
-            database = context.openOrCreateDatabase("app", Context.MODE_PRIVATE, null);
-
-            database.execSQL("CREATE TABLE IF NOT EXISTS "+NOME_TABELA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, telefone VARCHAR)");
-        }catch (Exception e){
-            return false;
-        }
-
-        return true;
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CRIAR_TABELA);
     }
 
-    public ArrayList<NumIndesejado> carregarNumIndesejados(){
-        ArrayList<NumIndesejado> lista = new ArrayList<>();
-
-        if(conexao()){
-            try{
-                Cursor cursor = database.rawQuery("SELECT id, nome, telefone FROM "+NOME_TABELA, null);
-
-                int nome = cursor.getColumnIndex("nome");
-                int tel = cursor.getColumnIndex("telefone");
-                cursor.moveToFirst();
-
-                NumIndesejado ligacao;
-                while (cursor != null){
-                    ligacao = new NumIndesejado();
-
-                    ligacao.setNome(cursor.getString(nome));
-                    ligacao.setTelefone(cursor.getString(tel));
-
-                    lista.add(ligacao);
-
-                    cursor.moveToNext();
-                }
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return lista;
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DELETAR_TABELA);
+        onCreate(db);
     }
 
-    public boolean adicionarNumero(NumIndesejado numIndesejado){
-
-        if(conexao()){
-            try{
-                database.execSQL("INSERT INTO "+NOME_TABELA+"(nome, telefone) VALUES('"
-                        +numIndesejado.getNome()+"', '"+numIndesejado.getTelefone()+"')");
-            }catch (Exception e){
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
 }
