@@ -37,7 +37,9 @@ public class AdicionarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar);
 
+        //Habilita o botão de up do toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         referencias();
         listeners();
 
@@ -57,6 +59,7 @@ public class AdicionarActivity extends AppCompatActivity {
         }
     }
 
+    //Recolhe as informações de edição passadas pelo Bundle
     private void editar() {
         id = bundle.getLong("id");
         editNome = bundle.getString("nome");
@@ -68,8 +71,6 @@ public class AdicionarActivity extends AppCompatActivity {
 
         editar = true;
     }
-
-
 
     //Adiciona a referencia dos componentes da Activity
     public void referencias(){
@@ -126,6 +127,7 @@ public class AdicionarActivity extends AppCompatActivity {
         });
     }
 
+    //Apresenta um alerta para confirmação de edição ao usuário
     public void confirmarEdição(final NumBloqueado numBloqueado){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AdicionarActivity.this);

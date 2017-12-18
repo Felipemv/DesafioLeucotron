@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Created by felipe on 17/12/17.
  */
 
+//Classe de interação de CRUD com o banco de dados
 public class NumBloqueadoDAO {
 
     private static final String NOME_TABELA = "lista_negra";

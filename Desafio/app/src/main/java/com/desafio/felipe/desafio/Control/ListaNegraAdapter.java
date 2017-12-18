@@ -79,6 +79,7 @@ public class ListaNegraAdapter extends BaseAdapter{
         return convertView;
     }
 
+    // Cria os listeners para cada item da lista de números
     public void listeners(ImageButton remover, ImageButton editar, final NumBloqueado num){
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +119,5 @@ public class ListaNegraAdapter extends BaseAdapter{
             }
         });
     }
-
 
 }

@@ -24,9 +24,8 @@
         </receiver>
 
         <activity android:name=".Control.AdicionarActivity"
-            android:label="Adicionar Números"
+            android:label="Adicionar à lista negra"
             android:parentActivityName=".Control.DesafioActivity">
-
         </activity>
 
     </application>

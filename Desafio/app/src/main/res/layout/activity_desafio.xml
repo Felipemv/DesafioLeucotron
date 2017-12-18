@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.desafio.felipe.desafio.Control.DesafioActivity">
 
-
     <TextView
         android:id="@+id/cabecalhoAgenda"
         android:layout_width="wrap_content"
@@ -16,31 +15,40 @@
         app:layout_constraintStart_toStartOf="parent"
         android:padding="10sp"/>
 
+    <TextView
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"
+        app:layout_constraintTop_toBottomOf="@+id/cabecalhoAgenda"/>
+
+    <TextView
+        android:id="@+id/semNumeros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:text="Você não possui números cadastrados."
+        app:layout_constraintTop_toBottomOf="@+id/space"
+        android:visibility="gone"/>
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cabecalhoAgenda">
+        app:layout_constraintTop_toBottomOf="@+id/space">
 
     </ListView>
 
     <ImageButton
         android:id="@+id/carregar"
         android:src="@drawable/atualizar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/listView"
-        app:layout_constraintEnd_toStartOf="@id/adicionar"
-        android:layout_marginRight="10dp"/>
+        style="@style/imgBtnTelaPrincipal"
+        app:layout_constraintEnd_toStartOf="@id/adicionar"/>
 
     <ImageButton
         android:src="@drawable/adicionar"
         android:id="@+id/adicionar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
-        android:layout_marginRight="10dp"/>
+        style="@style/imgBtnTelaPrincipal"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>

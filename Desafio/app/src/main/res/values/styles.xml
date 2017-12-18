@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#101012</item>
         <item name="colorPrimaryDark">#000</item>
@@ -21,6 +21,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="layout_constraintBottom_toTopOf">parent</item>
         <item name="layout_constraintTop_toBottomOf">parent</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="imgBtnTelaPrincipal" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toTopOf">@id/space</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
