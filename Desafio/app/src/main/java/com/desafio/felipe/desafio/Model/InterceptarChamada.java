@@ -3,7 +3,6 @@ package com.desafio.felipe.desafio.Model;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.ITelephony;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 public class InterceptarChamada extends BroadcastReceiver {
 
-    private NumIndesejadoDAO numIndesejadoDAO;
+    private NumBloqueadoDAO numBloqueadoDAO;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -26,12 +25,12 @@ public class InterceptarChamada extends BroadcastReceiver {
 
             //Se o numero estiver no banco chama a função de bloqueio
 
-            numIndesejadoDAO = new NumIndesejadoDAO(context);
-            ArrayList<NumIndesejado> arrayList = numIndesejadoDAO.carregarNumIndesejados();
+            numBloqueadoDAO = new NumBloqueadoDAO(context);
+            ArrayList<NumBloqueado> arrayList = numBloqueadoDAO.carregarNumIndesejados();
 
 
             for (int i = 0; i < arrayList.size(); i++) {
-                if(num.contains(arrayList.get(i).getTelefone())){
+                if(num.contains(arrayList.get(i).getTelefone().replaceAll("-", ""))){
                     bloquearChamada(context);
                     break;
                 }

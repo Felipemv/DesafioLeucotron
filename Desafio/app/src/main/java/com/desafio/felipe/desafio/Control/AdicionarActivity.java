@@ -8,14 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.desafio.felipe.desafio.Model.BancoDeDados;
-import com.desafio.felipe.desafio.Model.NumIndesejado;
-import com.desafio.felipe.desafio.Model.NumIndesejadoDAO;
+import com.desafio.felipe.desafio.Model.NumBloqueado;
+import com.desafio.felipe.desafio.Model.NumBloqueadoDAO;
 import com.desafio.felipe.desafio.R;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
 public class AdicionarActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class AdicionarActivity extends AppCompatActivity {
     private String editNome;
     private String editTel;
 
-    private NumIndesejadoDAO numIndesejadoDAO;
+    private NumBloqueadoDAO numBloqueadoDAO;
     private boolean editar = false;
 
     @Override
@@ -38,10 +37,17 @@ public class AdicionarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         referencias();
         listeners();
 
-        numIndesejadoDAO = new NumIndesejadoDAO(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        numBloqueadoDAO = new NumBloqueadoDAO(this);
 
         bundle = new Bundle();
         bundle = getIntent().getExtras();
@@ -63,6 +69,8 @@ public class AdicionarActivity extends AppCompatActivity {
         editar = true;
     }
 
+
+
     //Adiciona a referencia dos componentes da Activity
     public void referencias(){
 
@@ -70,6 +78,11 @@ public class AdicionarActivity extends AppCompatActivity {
         telefone = (findViewById(R.id.addTelefone));
 
         adicionar = (Button) findViewById(R.id.addBlackList);
+
+        //Criando máscara para o número do telefone
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("NNNNN-NNNN");
+        MaskTextWatcher mtw = new MaskTextWatcher(telefone, smf);
+        telefone.addTextChangedListener(mtw);
     }
 
     //Adiciona os listeners aos componentes da Activity
@@ -78,48 +91,65 @@ public class AdicionarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final NumIndesejado numIndesejado = new NumIndesejado();
-                numIndesejado.setNome(nome.getText().toString());
-                numIndesejado.setTelefone(telefone.getText().toString());
+                NumBloqueado numBloqueado = new NumBloqueado();
+                numBloqueado.setNome(nome.getText().toString());
+                numBloqueado.setTelefone(telefone.getText().toString());
 
-                if(editar){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AdicionarActivity.this);
-                    builder.setTitle("Atenção");
-                    builder.setMessage("Confirmar edição?");
-                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            numIndesejado.setId(id);
-                            if(numIndesejadoDAO.editarNumero(numIndesejado)){
-                                Intent proximaPagina = new Intent(AdicionarActivity.this, DesafioActivity.class);
-                                startActivity(proximaPagina);
-                                finish();
-                            }
-                        }
-                    });
-                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                if(nome.getText().toString().trim().equals("") ||
+                        telefone.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(), "Preencha todos os campos",
+                            Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
-
-                    builder.create();
-                    builder.show();
-
+                }else if(telefone.getText().toString().length() < 10){
+                    Toast.makeText(getApplicationContext(), "Número de telefone incorreto",
+                            Toast.LENGTH_SHORT).show();
 
                 }else{
-                    if(numIndesejadoDAO.adicionarNumero(numIndesejado).getId() > 0){
-
-                        Intent proximaPagina = new Intent(AdicionarActivity.this, DesafioActivity.class);
-                        startActivity(proximaPagina);
-                        finish();
+                    if(editar){
+                        confirmarEdição(numBloqueado);
                     }else{
-                        Toast.makeText(AdicionarActivity.this, "Erro ao adicionar número!", Toast.LENGTH_SHORT).show();
+                        if(numBloqueadoDAO.adicionarNumero(numBloqueado).getId() > 0){
+
+                            Intent proximaPagina = new Intent(AdicionarActivity.this, DesafioActivity.class);
+                            startActivity(proximaPagina);
+                            finish();
+                        }else{
+                            Toast.makeText(AdicionarActivity.this, "Erro ao adicionar número!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
+
+
+
             }
         });
+    }
+
+    public void confirmarEdição(final NumBloqueado numBloqueado){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AdicionarActivity.this);
+        builder.setTitle("Atenção");
+        builder.setMessage("Confirmar edição?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                numBloqueado.setId(id);
+                if(numBloqueadoDAO.editarNumero(numBloqueado)){
+                    Intent proximaPagina = new Intent(AdicionarActivity.this, DesafioActivity.class);
+                    startActivity(proximaPagina);
+                    finish();
+                }
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancela a edição
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }

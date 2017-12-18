@@ -12,11 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.desafio.felipe.desafio.Control.AdicionarActivity;
-import com.desafio.felipe.desafio.Control.DesafioActivity;
-import com.desafio.felipe.desafio.Model.BancoDeDados;
-import com.desafio.felipe.desafio.Model.NumIndesejado;
-import com.desafio.felipe.desafio.Model.NumIndesejadoDAO;
+import com.desafio.felipe.desafio.Model.NumBloqueado;
+import com.desafio.felipe.desafio.Model.NumBloqueadoDAO;
 import com.desafio.felipe.desafio.R;
 
 import java.util.ArrayList;
@@ -25,19 +22,19 @@ import java.util.ArrayList;
  * Created by felipe on 15/12/17.
  */
 
-public class AdapterBlackList extends BaseAdapter{
+public class ListaNegraAdapter extends BaseAdapter{
 
     private Context context;
-    private ArrayList<NumIndesejado> list;
+    private ArrayList<NumBloqueado> list;
     private LayoutInflater inflater;
-    private NumIndesejadoDAO numIndesejadoDAO;
+    private NumBloqueadoDAO numBloqueadoDAO;
 
-    public AdapterBlackList(Context context, ArrayList<NumIndesejado> list) {
+    public ListaNegraAdapter(Context context, ArrayList<NumBloqueado> list) {
         this.context = context;
         this.list = list;
 
         inflater = LayoutInflater.from(context);
-        numIndesejadoDAO = new NumIndesejadoDAO(context);
+        numBloqueadoDAO = new NumBloqueadoDAO(context);
     }
 
     @Override
@@ -46,7 +43,7 @@ public class AdapterBlackList extends BaseAdapter{
     }
 
     @Override
-    public NumIndesejado getItem(int position) {
+    public NumBloqueado getItem(int position) {
         return list.get(position);
     }
 
@@ -68,7 +65,7 @@ public class AdapterBlackList extends BaseAdapter{
         ImageButton editar = (ImageButton) convertView.findViewById(R.id.editar);
         ImageButton remover = (ImageButton) convertView.findViewById(R.id.remover);
 
-        NumIndesejado ligacao = getItem(position);
+        NumBloqueado ligacao = getItem(position);
 
         nome.setText(ligacao.getNome());
         tele.setText(ligacao.getTelefone());
@@ -82,7 +79,7 @@ public class AdapterBlackList extends BaseAdapter{
         return convertView;
     }
 
-    public void listeners(ImageButton remover, ImageButton editar, final NumIndesejado num){
+    public void listeners(ImageButton remover, ImageButton editar, final NumBloqueado num){
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +103,7 @@ public class AdapterBlackList extends BaseAdapter{
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        numIndesejadoDAO.removerNumero(num.getId());
+                        numBloqueadoDAO.removerNumero(num.getId());
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {

@@ -1,20 +1,17 @@
 package com.desafio.felipe.desafio.Model;
 
-import android.app.DownloadManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 
 /**
  * Created by felipe on 17/12/17.
  */
 
-public class NumIndesejadoDAO {
+public class NumBloqueadoDAO {
 
     private static final String NOME_TABELA = "lista_negra";
 
@@ -30,13 +27,13 @@ public class NumIndesejadoDAO {
     private int indexTel;
 
 
-    public NumIndesejadoDAO(Context context) {
+    public NumBloqueadoDAO(Context context) {
         openHelper = new BancoDeDados(context);
         database = openHelper.getWritableDatabase();
     }
 
-    public ArrayList<NumIndesejado> carregarNumIndesejados(){
-        ArrayList<NumIndesejado> arrayList = new ArrayList<>();
+    public ArrayList<NumBloqueado> carregarNumIndesejados(){
+        ArrayList<NumBloqueado> arrayList = new ArrayList<>();
 
         try{
             Cursor cursor = database.query(NOME_TABELA, new String[]{COL_ID, COL_NOME, COL_TEL},
@@ -48,7 +45,7 @@ public class NumIndesejadoDAO {
 
             cursor.moveToNext();
             while(cursor != null){
-                NumIndesejado num = new NumIndesejado();
+                NumBloqueado num = new NumBloqueado();
 
                 num.setId(cursor.getLong(indexId));
                 num.setNome(cursor.getString(indexNome));
@@ -65,20 +62,20 @@ public class NumIndesejadoDAO {
         return arrayList;
     }
 
-    public NumIndesejado adicionarNumero(NumIndesejado numIndesejado){
+    public NumBloqueado adicionarNumero(NumBloqueado numBloqueado){
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_NOME, numIndesejado.getNome());
-        contentValues.put(COL_TEL, numIndesejado.getTelefone());
+        contentValues.put(COL_NOME, numBloqueado.getNome());
+        contentValues.put(COL_TEL, numBloqueado.getTelefone());
 
         try{
             long id = database.insert(BancoDeDados.NOME_TABELA, null, contentValues);
-            numIndesejado.setId(id);
+            numBloqueado.setId(id);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return numIndesejado;
+        return numBloqueado;
     }
 
     public boolean removerNumero(long id){
@@ -91,16 +88,16 @@ public class NumIndesejadoDAO {
         }
     }
 
-    public boolean editarNumero(NumIndesejado numIndesejado){
+    public boolean editarNumero(NumBloqueado numBloqueado){
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_ID, numIndesejado.getId());
-        contentValues.put(COL_NOME, numIndesejado.getNome());
-        contentValues.put(COL_TEL, numIndesejado.getTelefone());
+        contentValues.put(COL_ID, numBloqueado.getId());
+        contentValues.put(COL_NOME, numBloqueado.getNome());
+        contentValues.put(COL_TEL, numBloqueado.getTelefone());
 
         try{
-            database.update(BancoDeDados.NOME_TABELA, contentValues, COL_ID+"="+numIndesejado.getId(), null);
+            database.update(BancoDeDados.NOME_TABELA, contentValues, COL_ID+"="+ numBloqueado.getId(), null);
             return true;
         }catch (Exception e){
             return false;

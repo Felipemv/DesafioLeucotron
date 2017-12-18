@@ -4,7 +4,7 @@ package com.desafio.felipe.desafio.Model;
  * Created by felipe on 15/12/17.
  */
 
-public class NumIndesejado {
+public class NumBloqueado {
 
     private long id;
     private String nome;

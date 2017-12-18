@@ -23,7 +23,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Control.AdicionarActivity"></activity>
+        <activity android:name=".Control.AdicionarActivity"
+            android:label="Adicionar Números"
+            android:parentActivityName=".Control.DesafioActivity">
+
+        </activity>
 
     </application>
 
